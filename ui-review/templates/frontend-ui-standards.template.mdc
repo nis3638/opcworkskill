@@ -1,0 +1,73 @@
+---
+description: <FRONTEND_DIR> 前端 UI 规范（令牌、组件复用、状态、可访问性）。改 <FRONTEND_DIR>/src 下任何页面、组件或样式时必须遵守。
+globs: <FRONTEND_DIR>/src/**/*.tsx, <FRONTEND_DIR>/src/**/*.ts, <FRONTEND_DIR>/src/**/*.css
+alwaysApply: false
+---
+
+<!--
+模板使用说明（生成项目规则后删除本注释）：
+- 把所有 <PLACEHOLDER> 换成本项目的真实值；没有对应物的条目直接删掉，不要留空占位。
+- 占位符一览：
+  <FRONTEND_DIR>      前端根目录，如 frontend、apps/web、.（单仓库根）
+  <UI_SPEC_DOC>       UI 规范文档及章节，如 docs/design/ui-spec.md §5
+  <TOKENS_FILE>       令牌文件，如 src/styles/tokens.css
+  <TAILWIND_CONFIG>   如 tailwind.config.ts（Tailwind v4 则为含 @theme 的 CSS 文件）
+  <COLOR_TOKENS>      允许使用的颜色键列表
+  <TYPE_SCALE>        字号刻度及用途
+  <RADIUS_SCALE>      圆角刻度及用途
+  <SHARED_UI_DIR>     共享组件目录，如 src/shared/ui、src/components/ui
+  <LEGACY_UI>         禁止新增/扩展的旧组件或私有样式，如 modules/system/ui/（Ry*）、.co-*、.platform-*
+  <REFERENCE_PAGE>    参考样板页，如 src/modules/organizations/DirectoryPage.tsx
+  <ASYNC_STATE> / <EMPTY_STATE> / <PAGE_HEADER> 等：项目里对应组件名
+  <BREAKPOINT_HOOK>   桌面/移动切换方式，如 useIsDesktop()
+  <TEST_CMD>          如 pnpm typecheck && pnpm test
+  <SCREENSHOT_DIR>    截图存放约定
+-->
+
+# 前端 UI 规范（<FRONTEND_DIR>）
+
+唯一取值来源：`<UI_SPEC_DOC>`。本规则没写的取值回到规范文档查；规范也没有就停下来报告，不得自行编值。
+<!-- 如有其他目录的独立规则（如 demo/** 的规则），在此注明互不适用。 -->
+
+## 1. 令牌（严禁硬编码）
+- 颜色只用 `<TOKENS_FILE>` 变量对应的 Tailwind 键：<COLOR_TOKENS>（例：`paper`、`surface`、`ink`/`ink-2`/`ink-3`、`border`、`primary(-hover/-light)`、`danger`、`on-accent`）。CSS 里用 `var(--xxx)`。
+- 禁止：十六进制色值、`rgb()`/`rgba()`、`bg-white`、`text-white`、`white`/`#fff`、任意像素字号 `text-[NNpx]`、`tracking-tight`/负字距、Tailwind `dark:` 变体。暗色由令牌自动切换。主色按钮上的文字用 `<ON_ACCENT_CLASS>`（例：`text-on-accent`）。
+- 确需例外：在代码旁写 `theme-exempt: 原因`，并在交付说明列出。
+- 字号只用 <TYPE_SCALE>（例：`text-xs`(12) / `sm`(13，正文默认) / `base`(14，页头标题) / `lg` / `xl`）。字重只用 <FONT_WEIGHTS>（例：400/500/600）。
+- 圆角：<RADIUS_SCALE>（例：`rounded-sm` 按钮/输入、`rounded-lg` 面板、`rounded-xl` 弹窗）。间距按 <SPACING_GRID>（例：4px）栅格。
+- 正文和说明文字最低用 `<MIN_TEXT_TOKEN>`（例：`text-ink-3`）；更浅的文字色只用于图标、占位符、禁用态。
+
+## 2. 组件复用（只从 <SHARED_UI_DIR> 取）
+- 页头：`<SHARED_UI_DIR>/<PAGE_HEADER_FILE>` 的 `<PAGE_HEADER>`（面包屑 + 标题 + actions，唯一主按钮放最右）。页面内不再写 `<h1>` 大标题。
+- 按钮：`<BUTTON>`（链接按钮用路由 `<Link>` + 按钮样式）。禁止原生 `<button>` 自写样式和新造 `.xxx-primary` 类。
+- 表格：`<SHARED_UI_DIR>/<TABLE_FILE>`，表头 `scope="col"`，首列用 `<th scope="row">`。禁止新写原生 `<table>` 加模块 CSS。
+- 分页：`<SHARED_UI_DIR>/<PAGINATION_FILE>`。模块之间不得互相引用 UI 组件（例：不要从 `meetings/components/` 引用分页）。
+- 表单：`<FORM_FIELD>`；控件用 `<FORM_CONTROLS>`（例：Input / Select / Textarea / Checkbox / Switch）。
+- 状态标签：`<BADGE>`；不再使用全局 `.badge-*` 一类旧类名。
+- 浮层：<OVERLAYS>（例：Dialog、Sheet、Popover、DropdownMenu、Tooltip、toast）。
+- 禁止新增或扩展 <LEGACY_UI>；改到这些文件时，顺手迁到 shared 组件。
+- 参考样板：`<REFERENCE_PAGE>`（例：PageHeader + 筛选条 + 异步状态 + 表格/移动卡片 + 分页）。新列表页照它的结构写。
+
+## 3. 页面结构与状态
+- 列表页：<LIST_LAYOUT>（例：PageHeader → 工具栏 → 表格贴边 → 分页）。表单/详情页：<FORM_LAYOUT>（例：`p-6 max-w-form mx-auto`）。
+- 每个远程数据区必须包 `<ASYNC_STATE>`（加载骨架 / 错误加重试 / 空状态）。空状态必须给标题、说明，有筛选时提供"清空筛选"。禁止纯文字"加载中…" / "暂无数据"。
+- 无权限：用 `<EMPTY_STATE>`（图标 + 说明），不要裸的 `<p role="alert">`。
+- 桌面和移动用 `<BREAKPOINT_HOOK>` 切换表格和卡片列表，两种都要实现。
+- 未完成页面不得出现在生产导航；用户可见文案不得出现"样板 / Mock / 演示 / 待接入 / TODO"等开发用语（Mock 专属路由除外）。站内跳转用 `<Link>`，不用 `<a href>`。
+
+## 4. 可访问性清单（每次交付自查）
+- [ ] 每个输入控件都有可见 label 或 `aria-label`；错误用 `aria-invalid` + `aria-describedby`。
+- [ ] 纯图标按钮有 `aria-label`，图标加 `aria-hidden`。
+- [ ] 当前导航 / 页码用 `aria-current`；分段切换用 Tabs（role=tab），不要用 `aria-pressed` 模拟页签。
+- [ ] 焦点可见：沿用项目的 `focus-visible` 样式，不得 `outline:none` 而不提供替代。
+- [ ] 文字对比度 ≥ 4.5:1（亮、暗两种主题都要满足）。
+- [ ] 触控（窄屏或 pointer: coarse）可点击区 ≥ 44px。
+- [ ] 状态不能只靠颜色表达（加文字或形状）。
+- [ ] 动画遵守 `prefers-reduced-motion`。
+
+## 5. 验收
+- 硬编码扫描（对本次改动的文件执行，必须为空或全部带 `theme-exempt`）：
+  `rg -n "#[0-9a-fA-F]{3,8}\b|rgba?\(|bg-white|text-white|text-\[\d+px\]|tracking-(tight|tighter)|dark:" <文件>`
+  （已配置则直接 `pnpm lint:ui`）
+- `<TEST_CMD>` 通过。
+- UI 变更附亮色 + 暗色、桌面 1440 + 移动 390 截图（存放于 `<SCREENSHOT_DIR>`）。区分 Mock 通过与真实联调，不宣称未执行的检查。
