@@ -1,0 +1,114 @@
+/*
+ * 设计令牌模板（写入项目后删除本段说明）。
+ * 把所有 <PLACEHOLDER> 换成从参考页提取的真实值；估测值在行尾标 estimated。
+ * 项目已有令牌命名时，改用项目原名并做映射，不要另起一套平行变量。
+ * 参考中没有的项（尤其暗色）删掉或留待人决定，不要编造。
+ */
+
+:root {
+  /* 颜色 */
+  --bg: <COLOR_BG>;
+  --surface: <COLOR_SURFACE>;
+  --surface-subtle: <COLOR_SURFACE_SUBTLE>;
+  --text: <COLOR_TEXT>;
+  --text-2: <COLOR_TEXT_2>;
+  --text-3: <COLOR_TEXT_3>;
+  --border: <COLOR_BORDER>;
+  --primary: <COLOR_PRIMARY>;
+  --primary-hover: <COLOR_PRIMARY_HOVER>;
+  --primary-light: <COLOR_PRIMARY_LIGHT>;
+  --on-accent: <COLOR_ON_ACCENT>;
+  --danger: <COLOR_DANGER>;
+  --success: <COLOR_SUCCESS>;
+  --warning: <COLOR_WARNING>;
+
+  /* 字体 */
+  --font-sans: <FONT_SANS>;
+  --font-mono: <FONT_MONO>;
+  --text-xs: <TYPE_XS>;
+  --text-sm: <TYPE_SM>;
+  --text-base: <TYPE_BASE>;
+  --text-lg: <TYPE_LG>;
+  --text-xl: <TYPE_XL>;
+  --leading-body: <LEADING_BODY>;
+  --leading-heading: <LEADING_HEADING>;
+  --font-regular: <WEIGHT_REGULAR>;
+  --font-medium: <WEIGHT_MEDIUM>;
+  --font-semibold: <WEIGHT_SEMIBOLD>;
+
+  /* 间距（按 <SPACING_GRID> 栅格，如 4px） */
+  --space-1: <SPACE_1>;
+  --space-2: <SPACE_2>;
+  --space-3: <SPACE_3>;
+  --space-4: <SPACE_4>;
+  --space-6: <SPACE_6>;
+  --space-8: <SPACE_8>;
+
+  /* 圆角 / 阴影 / 布局 */
+  --radius-sm: <RADIUS_SM>;
+  --radius-md: <RADIUS_MD>;
+  --radius-lg: <RADIUS_LG>;
+  --radius-xl: <RADIUS_XL>;
+  --shadow-sm: <SHADOW_SM>;
+  --shadow-md: <SHADOW_MD>;
+  --max-width: <MAX_WIDTH>;
+
+  /* 动效 */
+  --ease: <EASE>;
+  --duration-fast: <DURATION_FAST>;
+  --duration: <DURATION>;
+}
+
+.dark,
+[data-theme="dark"] {
+  --bg: <COLOR_BG_DARK>;
+  --surface: <COLOR_SURFACE_DARK>;
+  --surface-subtle: <COLOR_SURFACE_SUBTLE_DARK>;
+  --text: <COLOR_TEXT_DARK>;
+  --text-2: <COLOR_TEXT_2_DARK>;
+  --text-3: <COLOR_TEXT_3_DARK>;
+  --border: <COLOR_BORDER_DARK>;
+  --primary: <COLOR_PRIMARY_DARK>;
+  --primary-hover: <COLOR_PRIMARY_HOVER_DARK>;
+  --primary-light: <COLOR_PRIMARY_LIGHT_DARK>;
+  --on-accent: <COLOR_ON_ACCENT_DARK>;
+  --danger: <COLOR_DANGER_DARK>;
+  --success: <COLOR_SUCCESS_DARK>;
+  --warning: <COLOR_WARNING_DARK>;
+  --shadow-sm: <SHADOW_SM_DARK>;
+  --shadow-md: <SHADOW_MD_DARK>;
+}
+
+/*
+ * 可选：Tailwind v4。不需要就整段删除。
+ * v3 则把同类值写进 tailwind.config.* 的 theme.extend。
+ */
+@theme {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-subtle: var(--surface-subtle);
+  --color-text: var(--text);
+  --color-text-2: var(--text-2);
+  --color-text-3: var(--text-3);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--primary-light);
+  --color-on-accent: var(--on-accent);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --text-xs: var(--text-xs);
+  --text-sm: var(--text-sm);
+  --text-base: var(--text-base);
+  --text-lg: var(--text-lg);
+  --text-xl: var(--text-xl);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+}
