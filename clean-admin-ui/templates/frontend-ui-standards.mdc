@@ -1,0 +1,33 @@
+---
+description: clean-admin-ui 前端 UI 交付自查清单（复制到项目 .cursor/rules/frontend-ui-standards.mdc 后替换占位路径）。
+globs: src/**/*.tsx, src/**/*.ts, src/**/*.css
+alwaysApply: false
+---
+
+# 前端 UI 自查清单（clean-admin-ui）
+
+令牌文件：`<TOKENS_FILE>`；共享基础组件：`<SHARED_UI_DIR>`。
+
+## 1. 令牌与色彩禁令
+- [ ] 全站只使用语义令牌（`paper` / `surface` / `elevated` / `selected` / `ink` / `border` / `action-primary` / `jade` / `indigo` / `amber` / `cinnabar` / `navy`），不写新的十六进制色值、`rgb()`、`bg-white`、`text-white` 或 Tailwind 默认色板（`slate`/`gray`/`zinc`/`neutral`/`red`）。
+- [ ] 不使用 Tailwind `dark:` 变体，暗色模式完全由 `[data-theme="dark"]` 令牌自动切换。
+- [ ] 实心主操作与危险按钮上的文字一律使用 `text-on-accent`，确保亮/暗主题对比度达标。
+- [ ] 左侧菜单使用 `surface` 底 + `1px border-light` 分隔线，右侧主工作区使用 `paper` 画布，保持清晰明暗区分。
+
+硬编码扫描命令：
+```sh
+rg -n "#[0-9a-fA-F]{3,8}\b|rgba?\(|bg-white|text-white|dark:|\b(bg|text|border)-(neutral|slate|zinc|gray|stone|red|black)\b" <修改文件>
+```
+
+## 2. 组件形态与层级
+- [ ] 每个局部操作区（页头、卡片底、弹窗底）最多 1 个实心主按钮，次动作使用白底描边按钮。
+- [ ] 静态卡片使用 `bg-surface border border-border-light rounded-lg`（12px），不加厚重阴影；浮层（Popover / Dialog）使用 `shadow-md` / `shadow-lg`。
+- [ ] 同一行最多 1 个彩色状态 Badge（浅底 + 深字 + 浅描边胶囊）；普通属性展示纯文字。
+- [ ] 轻决策优先用锚定 Popover；破坏性操作或批量提交在 Dialog 确认按钮上方明确列出受影响对象与后果。
+- [ ] 金额、计数与指标统一启用 `tabular-nums`。
+
+## 3. 页面状态与可访问性
+- [ ] 覆盖加载、空结果、失败（可重试）、无权限与只读状态；筛选无结果提供清空入口。
+- [ ] 表单输入关联可见 `<label>` 或 `aria-label`，错误态设置 `aria-invalid` 与 `aria-describedby`。
+- [ ] 正文、说明与占位提示至少用 `ink-3`；`ink-4` 仅用于禁用态、装饰图标与分隔符。
+- [ ] 窄屏（< 840px）与粗指针下可点击控件不小于 `44×44px`；动效遵守 `prefers-reduced-motion`。

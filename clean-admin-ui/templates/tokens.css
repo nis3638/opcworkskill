@@ -1,0 +1,233 @@
+/*
+ * clean-admin-ui 设计令牌（亮/暗双主题）
+ * 特点：
+ * 1. 纯白/提亮侧栏 (--surface) 与浅灰/深灰工作区画布 (--paper) 清晰区分。
+ * 2. 主操作色通过 --action-primary 语义别名解耦，默认指向青绿 (--jade)；
+ *    若新项目需换品牌色或切炭黑，仅替换 --action-primary-rgb / --action-primary-hover-rgb 即可。
+ * 3. 所有文字与强调底色组合均按 WCAG 2.x AA (>= 4.5:1) 校核。
+ */
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* 画布与表面层级 */
+  --paper-rgb: 245 246 248;          /* #F5F6F8 右侧主工作区画布 */
+  --paper: rgb(var(--paper-rgb));
+  --paper-subtle-rgb: 239 240 243;   /* #EFF0F3 悬停底、中性胶囊底 */
+  --paper-subtle: rgb(var(--paper-subtle-rgb));
+  --surface-rgb: 255 255 255;        /* #FFFFFF 侧栏底、卡片、表格、面板 */
+  --surface: rgb(var(--surface-rgb));
+  --surface-subtle-rgb: 246 247 249; /* #F6F7F9 表头、搜索框底、禁用框底 */
+  --surface-subtle: rgb(var(--surface-subtle-rgb));
+  --elevated-rgb: 255 255 255;       /* #FFFFFF 弹窗、Popover、菜单、次按钮 */
+  --elevated: rgb(var(--elevated-rgb));
+  --selected-rgb: 243 244 246;       /* #F3F4F6 导航当前项、选中行、选中卡片 */
+  --selected: rgb(var(--selected-rgb));
+
+  /* 文字层级 */
+  --ink-rgb: 27 29 34;               /* #1B1D22 主文字 */
+  --ink: rgb(var(--ink-rgb));
+  --ink-2-rgb: 60 64 73;             /* #3C4049 次级正文 */
+  --ink-2: rgb(var(--ink-2-rgb));
+  --ink-3-rgb: 98 103 122;           /* #62677A 说明、表头、占位提示 (>= 4.5:1) */
+  --ink-3: rgb(var(--ink-3-rgb));
+  --ink-4-rgb: 142 147 160;          /* #8E93A0 仅禁用文字、装饰图标、分隔符 */
+  --ink-4: rgb(var(--ink-4-rgb));
+
+  /* 边框层级 */
+  --border-light-rgb: 236 237 240;   /* #ECEDF0 侧栏分隔线、卡片与行分隔 */
+  --border-light: rgb(var(--border-light-rgb));
+  --border-rgb: 225 227 232;         /* #E1E3E8 输入框与按钮描边 */
+  --border: rgb(var(--border-rgb));
+  --border-dark-rgb: 201 204 212;    /* #C9CCD4 未选复选框、强调边框 */
+  --border-dark: rgb(var(--border-dark-rgb));
+
+  /* 成功 / 青绿族（默认同时作为主操作色） */
+  --jade-rgb: 8 127 107;             /* #087F6B */
+  --jade: rgb(var(--jade-rgb));
+  --jade-hover-rgb: 6 109 91;        /* #066D5B */
+  --jade-hover: rgb(var(--jade-hover-rgb));
+  --jade-dark-rgb: 4 72 60;          /* #04483C */
+  --jade-dark: rgb(var(--jade-dark-rgb));
+  --jade-light-rgb: 230 243 239;     /* #E6F3EF */
+  --jade-light: rgb(var(--jade-light-rgb));
+  --jade-border-rgb: 179 219 209;    /* #B3DBD1 */
+  --jade-border: rgb(var(--jade-border-rgb));
+
+  /* 主操作语义别名（换品牌色或切炭黑 29 29 32 时仅改这里） */
+  --action-primary-rgb: var(--jade-rgb);
+  --action-primary: rgb(var(--action-primary-rgb));
+  --action-primary-hover-rgb: var(--jade-hover-rgb);
+  --action-primary-hover: rgb(var(--action-primary-hover-rgb));
+  --on-accent-rgb: 255 255 255;      /* #FFFFFF 实心强调底上的文字与图标 */
+  --on-accent: rgb(var(--on-accent-rgb));
+
+  /* 辅助 / 处理中（蓝紫） */
+  --indigo-rgb: 67 56 202;           /* #4338CA */
+  --indigo: rgb(var(--indigo-rgb));
+  --indigo-hover-rgb: 55 48 163;     /* #3730A3 */
+  --indigo-hover: rgb(var(--indigo-hover-rgb));
+  --indigo-dark-rgb: 55 48 163;
+  --indigo-dark: rgb(var(--indigo-dark-rgb));
+  --indigo-light-rgb: 238 242 255;   /* #EEF2FF */
+  --indigo-light: rgb(var(--indigo-light-rgb));
+  --indigo-border-rgb: 199 210 254;  /* #C7D2FE */
+  --indigo-border: rgb(var(--indigo-border-rgb));
+
+  /* 警告 / 待处理（琥珀） */
+  --amber-rgb: 149 88 0;             /* #955800 */
+  --amber: rgb(var(--amber-rgb));
+  --amber-hover-rgb: 122 72 0;       /* #7A4800 */
+  --amber-hover: rgb(var(--amber-hover-rgb));
+  --amber-dark-rgb: 92 55 0;         /* #5C3700 */
+  --amber-dark: rgb(var(--amber-dark-rgb));
+  --amber-light-rgb: 253 244 230;    /* #FDF4E6 */
+  --amber-light: rgb(var(--amber-light-rgb));
+  --amber-border-rgb: 240 211 164;   /* #F0D3A4 */
+  --amber-border: rgb(var(--amber-border-rgb));
+
+  /* 危险 / 异常（朱砂红） */
+  --cinnabar-rgb: 180 58 50;         /* #B43A32 */
+  --cinnabar: rgb(var(--cinnabar-rgb));
+  --cinnabar-hover-rgb: 152 47 40;   /* #982F28 */
+  --cinnabar-hover: rgb(var(--cinnabar-hover-rgb));
+  --cinnabar-dark-rgb: 110 31 26;    /* #6E1F1A */
+  --cinnabar-dark: rgb(var(--cinnabar-dark-rgb));
+  --cinnabar-light-rgb: 252 237 235; /* #FCEDEB */
+  --cinnabar-light: rgb(var(--cinnabar-light-rgb));
+  --cinnabar-border-rgb: 241 197 192;/* #F1C5C0 */
+  --cinnabar-border: rgb(var(--cinnabar-border-rgb));
+
+  /* 信息 / 内联提示块（钢蓝） */
+  --navy-rgb: 29 92 138;             /* #1D5C8A */
+  --navy: rgb(var(--navy-rgb));
+  --navy-light-rgb: 236 243 249;     /* #ECF3F9 */
+  --navy-light: rgb(var(--navy-light-rgb));
+  --navy-border-rgb: 188 213 234;    /* #BCD5EA */
+  --navy-border: rgb(var(--navy-border-rgb));
+
+  /* 字体 */
+  --font-sans: "Inter Variable", "Inter", -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* 圆角 */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* 阴影与遮罩 */
+  --shadow-xs: 0 1px 2px rgb(15 17 21 / 0.04);
+  --shadow-sm: 0 1px 3px rgb(15 17 21 / 0.06);
+  --shadow-md: 0 0 0 1px rgb(var(--border-rgb)), 0 4px 16px rgb(15 17 21 / 0.08);
+  --shadow-lg: 0 0 0 1px rgb(var(--border-light-rgb)), 0 16px 48px rgb(15 17 21 / 0.16);
+  --shadow-btn: 0 1px 2px rgb(15 17 21 / 0.06), inset 0 1px 0 rgb(255 255 255 / 0.72);
+  --shadow-btn-primary: 0 1px 2px rgb(15 17 21 / 0.18), inset 0 1px 0 rgb(255 255 255 / 0.18), inset 0 -1px 0 rgb(0 0 0 / 0.12);
+  --shadow-card: 0 1px 2px rgb(15 17 21 / 0.04), 0 2px 8px -2px rgb(15 17 21 / 0.06);
+  --overlay: rgb(15 17 21 / 0.32);
+
+  /* 动效 */
+  --transition: 0.16s cubic-bezier(0.2, 0, 0, 1);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper-rgb: 20 23 28;             /* #14171C 右侧深灰画布 */
+  --paper: rgb(var(--paper-rgb));
+  --paper-subtle-rgb: 44 50 62;      /* #2C323E */
+  --paper-subtle: rgb(var(--paper-subtle-rgb));
+  --surface-rgb: 27 31 38;           /* #1B1F26 左侧菜单与内容表面 */
+  --surface: rgb(var(--surface-rgb));
+  --surface-subtle-rgb: 38 44 55;    /* #262C37 */
+  --surface-subtle: rgb(var(--surface-subtle-rgb));
+  --elevated-rgb: 43 49 60;          /* #2B313C */
+  --elevated: rgb(var(--elevated-rgb));
+  --selected-rgb: 48 55 69;          /* #303745 */
+  --selected: rgb(var(--selected-rgb));
+
+  --ink-rgb: 240 242 245;            /* #F0F2F5 */
+  --ink: rgb(var(--ink-rgb));
+  --ink-2-rgb: 213 218 226;          /* #D5DAE2 */
+  --ink-2: rgb(var(--ink-2-rgb));
+  --ink-3-rgb: 157 166 184;          /* #9DA6B8 */
+  --ink-3: rgb(var(--ink-3-rgb));
+  --ink-4-rgb: 127 136 155;          /* #7F889B */
+  --ink-4: rgb(var(--ink-4-rgb));
+
+  --border-light-rgb: 54 61 75;      /* #363D4B */
+  --border-light: rgb(var(--border-light-rgb));
+  --border-rgb: 72 81 100;           /* #485164 */
+  --border: rgb(var(--border-rgb));
+  --border-dark-rgb: 100 112 135;    /* #647087 */
+  --border-dark: rgb(var(--border-dark-rgb));
+
+  --jade-rgb: 60 196 167;            /* #3CC4A7 */
+  --jade: rgb(var(--jade-rgb));
+  --jade-hover-rgb: 90 208 182;      /* #5AD0B6 */
+  --jade-hover: rgb(var(--jade-hover-rgb));
+  --jade-dark-rgb: 154 230 212;      /* #9AE6D4 */
+  --jade-dark: rgb(var(--jade-dark-rgb));
+  --jade-light-rgb: 27 59 53;        /* #1B3B35 */
+  --jade-light: rgb(var(--jade-light-rgb));
+  --jade-border-rgb: 43 102 90;      /* #2B665A */
+  --jade-border: rgb(var(--jade-border-rgb));
+
+  --action-primary-rgb: var(--jade-rgb);
+  --action-primary: rgb(var(--action-primary-rgb));
+  --action-primary-hover-rgb: var(--jade-hover-rgb);
+  --action-primary-hover: rgb(var(--action-primary-hover-rgb));
+  --on-accent-rgb: 13 21 19;         /* #0D1513 暗色实心按钮配深色文字 */
+  --on-accent: rgb(var(--on-accent-rgb));
+
+  --indigo-rgb: 165 180 252;
+  --indigo: rgb(var(--indigo-rgb));
+  --indigo-hover-rgb: 184 196 254;
+  --indigo-hover: rgb(var(--indigo-hover-rgb));
+  --indigo-dark-rgb: 214 222 255;
+  --indigo-dark: rgb(var(--indigo-dark-rgb));
+  --indigo-light-rgb: 36 40 71;
+  --indigo-light: rgb(var(--indigo-light-rgb));
+  --indigo-border-rgb: 85 95 168;
+  --indigo-border: rgb(var(--indigo-border-rgb));
+
+  --amber-rgb: 234 169 76;
+  --amber: rgb(var(--amber-rgb));
+  --amber-hover-rgb: 240 186 107;
+  --amber-hover: rgb(var(--amber-hover-rgb));
+  --amber-dark-rgb: 247 212 148;
+  --amber-dark: rgb(var(--amber-dark-rgb));
+  --amber-light-rgb: 58 46 26;
+  --amber-light: rgb(var(--amber-light-rgb));
+  --amber-border-rgb: 110 84 38;
+  --amber-border: rgb(var(--amber-border-rgb));
+
+  --cinnabar-rgb: 242 130 119;
+  --cinnabar: rgb(var(--cinnabar-rgb));
+  --cinnabar-hover-rgb: 246 158 149;
+  --cinnabar-hover: rgb(var(--cinnabar-hover-rgb));
+  --cinnabar-dark-rgb: 250 181 174;
+  --cinnabar-dark: rgb(var(--cinnabar-dark-rgb));
+  --cinnabar-light-rgb: 66 35 37;
+  --cinnabar-light: rgb(var(--cinnabar-light-rgb));
+  --cinnabar-border-rgb: 120 59 56;
+  --cinnabar-border: rgb(var(--cinnabar-border-rgb));
+
+  --navy-rgb: 126 179 227;
+  --navy: rgb(var(--navy-rgb));
+  --navy-light-rgb: 33 51 71;
+  --navy-light: rgb(var(--navy-light-rgb));
+  --navy-border-rgb: 54 86 120;
+  --navy-border: rgb(var(--navy-border-rgb));
+
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 0 0 1px rgb(var(--border-rgb)), 0 8px 24px rgb(0 0 0 / 0.45);
+  --shadow-lg: 0 0 0 1px rgb(var(--border-rgb)), 0 24px 64px rgb(0 0 0 / 0.55);
+  --shadow-btn: 0 1px 2px rgb(0 0 0 / 0.36), inset 0 1px 0 rgb(255 255 255 / 0.06);
+  --shadow-btn-primary: 0 1px 2px rgb(0 0 0 / 0.4), inset 0 1px 0 rgb(255 255 255 / 0.24), inset 0 -1px 0 rgb(0 0 0 / 0.16);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), inset 0 1px 0 rgb(255 255 255 / 0.03);
+  --overlay: rgb(0 0 0 / 0.6);
+}
