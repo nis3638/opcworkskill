@@ -1,7 +1,7 @@
 /*
- * clean-admin-ui 应用壳样式模板
- * 桌面 (>= 1024px)：纯白/提亮侧栏 (--surface) + 1px 右分隔线 + 右侧浅灰/深灰画布 (--paper)
- * 移动 (< 1024px)：顶部 48px 移动栏 + surface 侧栏抽屉 + 44px 最小触控区
+ * clean-admin-ui 应用壳样式模板（一体化大圆角连续白纸结构）
+ * 桌面 (>= 1024px)：浅灰外底 (--paper) 四周留 8px 边距，托起左侧纯白浮起小卡菜单与右侧大圆角连续白纸 (--surface)
+ * 移动 (< 1024px)：顶部 48px 移动栏 + paper 侧栏抽屉 + 44px 最小触控区
  */
 
 .app-shell {
@@ -10,7 +10,7 @@
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
-  background: var(--paper);
+  background: var(--surface);
   color: var(--ink);
 }
 
@@ -21,7 +21,7 @@
   min-width: 0;
   min-height: 0;
   overflow: hidden;
-  background: var(--paper);
+  background: var(--surface);
 }
 
 .app-main {
@@ -39,7 +39,15 @@
 @media (min-width: 64rem) {
   .app-shell {
     flex-direction: row;
-    padding: 0;
+    padding: 8px 8px 8px 0;
+    background: var(--paper);
+  }
+
+  .app-stage {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xs);
   }
 
   .nav-aside {
@@ -47,8 +55,6 @@
     flex-shrink: 0;
     align-self: stretch;
     z-index: 30;
-    background: var(--surface);
-    border-right: 1px solid var(--border-light);
   }
 }
 
@@ -69,7 +75,7 @@
 .nav-drawer {
   width: min(16rem, 86vw);
   height: 100%;
-  background: var(--surface);
+  background: var(--paper);
   box-shadow: var(--shadow-lg);
 }
 
@@ -91,17 +97,41 @@
   width: 56px;
 }
 
+/* 顶部 ⌘K 全局搜索触发框 */
+.nav-search-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 32px;
+  padding: 0 9px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--ink-3);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.nav-search-btn:hover {
+  border-color: var(--border);
+  color: var(--ink-2);
+}
+
 .nav-link {
   display: flex;
   align-items: center;
   gap: 10px;
   width: 100%;
-  min-height: 32px;
-  padding: 6px 8px;
+  min-height: 34px;
+  padding: 6px 10px;
   border-radius: var(--radius-md);
   color: var(--ink-2);
   text-decoration: none;
-  transition: background-color var(--transition), color var(--transition);
+  transition: background-color var(--transition), color var(--transition), box-shadow var(--transition);
 }
 
 .nav-link:hover {
@@ -109,18 +139,30 @@
   color: var(--ink);
 }
 
-/* 当前项保持安静：selected 灰底 + 1px 内描边，图标与文字同为 ink */
+/* 当前项：浅灰外底上浮起一张纯白小卡 + 极轻投影 + 主题色图标 */
 .nav-link.is-current,
 .nav-link.is-current:hover {
-  background: var(--selected);
-  box-shadow: inset 0 0 0 1px var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow-card), inset 0 0 0 1px var(--border-light);
   color: var(--ink);
-  font-weight: 500;
+  font-weight: 600;
 }
 
-.app-shell .nav-link:focus-visible {
+.nav-link.is-current svg {
+  color: var(--action-primary);
+}
+
+.app-shell .nav-link:focus-visible,
+.app-shell .nav-search-btn:focus-visible {
   outline: 2px solid var(--action-primary);
   outline-offset: -2px;
+}
+
+/* 隐藏 WebKit 默认搜索框清除叉号，由组件自行渲染统一清除按钮 */
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 @media (max-width: 839px), (pointer: coarse) {
@@ -131,7 +173,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .nav-link,
-  .nav-rail {
+  .nav-rail,
+  .nav-search-btn {
     transition: none;
   }
 }

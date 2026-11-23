@@ -12,7 +12,7 @@
   color-scheme: light;
 
   /* 画布与表面层级 */
-  --paper-rgb: 245 246 248;          /* #F5F6F8 右侧主工作区画布 */
+  --paper-rgb: 242 244 247;          /* #F2F4F7 外层浅灰底色（托起左侧浮卡菜单与右侧大圆角白纸） */
   --paper: rgb(var(--paper-rgb));
   --paper-subtle-rgb: 239 240 243;   /* #EFF0F3 悬停底、中性胶囊底 */
   --paper-subtle: rgb(var(--paper-subtle-rgb));
@@ -135,7 +135,7 @@
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --paper-rgb: 20 23 28;             /* #14171C 右侧深灰画布 */
+  --paper-rgb: 17 20 25;             /* #111419 暗色外层底色 */
   --paper: rgb(var(--paper-rgb));
   --paper-subtle-rgb: 44 50 62;      /* #2C323E */
   --paper-subtle: rgb(var(--paper-subtle-rgb));

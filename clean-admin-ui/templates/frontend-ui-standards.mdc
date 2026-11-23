@@ -12,7 +12,8 @@ alwaysApply: false
 - [ ] 全站只使用语义令牌（`paper` / `surface` / `elevated` / `selected` / `ink` / `border` / `action-primary` / `jade` / `indigo` / `amber` / `cinnabar` / `navy`），不写新的十六进制色值、`rgb()`、`bg-white`、`text-white` 或 Tailwind 默认色板（`slate`/`gray`/`zinc`/`neutral`/`red`）。
 - [ ] 不使用 Tailwind `dark:` 变体，暗色模式完全由 `[data-theme="dark"]` 令牌自动切换。
 - [ ] 实心主操作与危险按钮上的文字一律使用 `text-on-accent`，确保亮/暗主题对比度达标。
-- [ ] 左侧菜单使用 `surface` 底 + `1px border-light` 分隔线，右侧主工作区使用 `paper` 画布，保持清晰明暗区分。
+- [ ] 桌面端外层使用 `paper` 浅灰底托起左侧纯白浮起小卡菜单（配 `⌘K` 搜索入口）与右侧大圆角连续白纸（`surface`）；页头无硬横线，与下方 1px 细描边列表卡片左右严格对齐。
+- [ ] 搜索框使用纯白通透底（`bg-elevated`）、去多余外阴影与浏览器原生搜索叉号，桌面空态配 `/` 快捷键提示，有值时显示自定义清除按钮。
 
 硬编码扫描命令：
 ```sh
